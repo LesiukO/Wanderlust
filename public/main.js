@@ -53,9 +53,11 @@ const urlToFetch = `${forecastUrl}${apiKey}&q=${$input.val()}&days=4&hour=11`;
 // Render functions
 const renderVenues = (venues) => {
   $venueDivs.forEach(($venue, index) => {
-    // Add your code here:
-
-    let venueContent = '';
+		const venue = venues[index];
+    const venueIcon = venue.categories[0].icon;
+    const venueImgSrc = `${venueIcon.prefix}bg_64${venueIcon.suffix}`;
+    let venueContent =
+    createVenueHTML(venue.name, venue.location, venueImgSrc);
     $venue.append(venueContent);
   });
   $destination.append(`<h2>${venues[0].location.city}</h2>`);
@@ -63,9 +65,9 @@ const renderVenues = (venues) => {
 
 const renderForecast = (days) => {
   $weatherDivs.forEach(($day, index) => {
-    // Add your code here:
-
-
+		const venue = venues[index];
+		const venueIcon = venue.categories[0].icon;
+		const venueImgSrc = `${venueIcon.prefix}bg_64${venueIcon.suffix}`;
     let weatherContent = '';
     $day.append(weatherContent);
   });
@@ -76,7 +78,9 @@ const executeSearch = () => {
   $weatherDivs.forEach(day => day.empty());
   $destination.empty();
   $container.css("visibility", "visible");
-  getVenues()
+  getVenues().then(venues => {
+    return renderVenues(venues);
+  });
   getForecast()
   return false;
 }
