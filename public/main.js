@@ -6,7 +6,7 @@ const url = 'https://api.foursquare.com/v2/venues/explore?near=';
 
 // APIXU Info
 const apiKey = '95f048f1086740c29eb32852192906';
-const forecastUrl = 'https://api.apixu.com/v1/forecast.json?key=<YOUR_API_KEY>&q=07112&days=7';
+const forecastUrl = 'https://api.apixu.com/v1/forecast.json?key=';
 
 // Page Elements
 const $input = $('#city');
@@ -34,8 +34,19 @@ const getVenues = async () => {
   }
 }
 
-const getForecast = () => {
-
+const getForecast = async () => {
+const urlToFetch = `${forecastUrl}${apiKey}&q=${$input.val()}&days=4&hour=11`;
+	try {
+    const response = await fetch(urlToFetch);
+    if (response.ok) {
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      const days = jsonResponse.forecast.forecastday;
+      return days;
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
