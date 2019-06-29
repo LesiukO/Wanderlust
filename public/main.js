@@ -65,9 +65,6 @@ const renderVenues = (venues) => {
 
 const renderForecast = (days) => {
   $weatherDivs.forEach(($day, index) => {
-		const venue = venues[index];
-		const venueIcon = venue.categories[0].icon;
-		const venueImgSrc = `${venueIcon.prefix}bg_64${venueIcon.suffix}`;
     let weatherContent = '';
     $day.append(weatherContent);
   });
